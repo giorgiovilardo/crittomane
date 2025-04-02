@@ -6,7 +6,7 @@ Quick, hacky command to help me save private obsidian notes in github.
 
 ```shell
 git clone git@github.com:giorgiovilardo/crittomane.git
-go build -o ./cm main.go
+go build -ldflags="-s -w" -trimpath -o ./cm main.go
 chmod 0755 cm
 sudo mv cm /usr/local/bin
 ```
