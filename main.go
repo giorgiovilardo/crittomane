@@ -16,7 +16,7 @@ func main() {
 
 	switch command {
 	case "e":
-		zipBuffer, err := i.ZipPrivate()
+		zipBuffer, err := i.TarPrivate()
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
@@ -44,7 +44,7 @@ func main() {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		err = i.UnzipBytes(decrypted)
+		err = i.UntarBytes(decrypted)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
