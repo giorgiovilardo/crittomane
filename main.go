@@ -10,7 +10,7 @@ import (
 func main() {
 	command, password, err := parseArgs(os.Args)
 	if err != nil {
-		fmt.Println("Wrong argument: pass e or d as the command, then a password.")
+		fmt.Println("Crittomane v1.0.2: pass e or d as the command and a password.")
 		os.Exit(1)
 	}
 
