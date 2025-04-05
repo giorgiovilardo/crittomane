@@ -10,7 +10,7 @@ import (
 func main() {
 	command, password, err := parseArgs(os.Args)
 	if err != nil {
-		fmt.Println("Crittomane v1.0.2: pass e or d as the command and a password.")
+		fmt.Println("Crittomane v1.0.2: pass e or d as the command and optionally a password.")
 		os.Exit(1)
 	}
 
@@ -55,16 +55,28 @@ func main() {
 }
 
 func parseArgs(args []string) (string, string, error) {
-	if len(args) != 3 {
-		return "", "", fmt.Errorf("expected 2 arguments, got %d", len(args))
+	if len(args) < 2 || len(args) > 3 {
+		return "", "", fmt.Errorf("expected up to 2 arguments, got %d", len(args))
 	}
 
-	command := strings.ToLower(args[1])
-	pass := strings.ToLower(args[2])
-
+	command := args[1]
 	if command != "e" && command != "d" {
 		return "", "", fmt.Errorf("invalid command %q", command)
 	}
+
+	var pass string
+	if len(args) >= 3 {
+		pass = args[2]
+	} else {
+		askedPassword, err := i.AskPassword()
+		if err != nil {
+			return "", "", fmt.Errorf("error getting password")
+		}
+		pass = askedPassword
+	}
+
+	command = strings.ToLower(command)
+	pass = strings.ToLower(pass)
 
 	return command, pass, nil
 }
