@@ -1,15 +1,12 @@
 package internal
 
 import (
-	"syscall"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
 	"crypto/sha256"
 	"fmt"
 	"io"
-
-	"golang.org/x/term"
 )
 
 func EncryptBytes(data []byte, password string) ([]byte, error) {
@@ -62,14 +59,4 @@ func DecryptBytes(encryptedData []byte, password string) ([]byte, error) {
 	}
 
 	return plaintext, nil
-}
-
-func AskPassword() (string, error) {
-	fmt.Print("Password: ")
-	bytes, err := term.ReadPassword(int(syscall.Stdin))
-	fmt.Println()
-	if err != nil {
-		return "", err
-	}
-	return string(bytes), nil
 }

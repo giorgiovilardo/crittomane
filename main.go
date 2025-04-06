@@ -3,14 +3,16 @@ package main
 import (
 	"fmt"
 	i "github.com/giorgiovilardo/crittomane/internal"
+	"golang.org/x/term"
 	"os"
 	"strings"
+	"syscall"
 )
 
 func main() {
 	command, password, err := parseArgs(os.Args)
 	if err != nil {
-		fmt.Println("Crittomane v1.0.2: pass e or d as the command and optionally a password.")
+		fmt.Println("Crittomane v1.1.0: pass e or d as the command and optionally a password.")
 		os.Exit(1)
 	}
 
@@ -59,24 +61,32 @@ func parseArgs(args []string) (string, string, error) {
 		return "", "", fmt.Errorf("expected up to 2 arguments, got %d", len(args))
 	}
 
-	command := args[1]
+	command := strings.ToLower(args[1])
+
 	if command != "e" && command != "d" {
 		return "", "", fmt.Errorf("invalid command %q", command)
 	}
 
 	var pass string
-	if len(args) >= 3 {
+	if len(args) == 3 {
 		pass = args[2]
 	} else {
-		askedPassword, err := i.AskPassword()
+		askedPassword, err := askPassword()
 		if err != nil {
 			return "", "", fmt.Errorf("error getting password")
 		}
 		pass = askedPassword
 	}
 
-	command = strings.ToLower(command)
-	pass = strings.ToLower(pass)
-
 	return command, pass, nil
+}
+
+func askPassword() (string, error) {
+	fmt.Print("Password: ")
+	bytes, err := term.ReadPassword(int(syscall.Stdin))
+	fmt.Println()
+	if err != nil {
+		return "", err
+	}
+	return string(bytes), nil
 }

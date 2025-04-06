@@ -128,7 +128,7 @@ func UntarBytes(tarData []byte) error {
 				return fmt.Errorf("failed to set directory timestamps for %s: %w", filePath, err)
 			}
 
-		case tar.TypeReg, tar.TypeRegA:
+		case tar.TypeReg:
 			if err := os.MkdirAll(filepath.Dir(filePath), 0755); err != nil {
 				return fmt.Errorf("failed to create parent directory for %s: %w", filePath, err)
 			}
