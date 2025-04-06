@@ -9,10 +9,12 @@ import (
 	"syscall"
 )
 
+const VERSION = "1.1.1"
+
 func main() {
 	command, password, err := parseArgs(os.Args)
 	if err != nil {
-		fmt.Println("Crittomane v1.1.0: pass e or d as the command and optionally a password.")
+		fmt.Printf("Crittomane v%s: pass e or d as the command and optionally a password.\n", VERSION)
 		os.Exit(1)
 	}
 
