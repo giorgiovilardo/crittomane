@@ -6,6 +6,7 @@ Quick, hacky command to help me save private obsidian notes in github.
 
 ```shell
 git clone git@github.com:giorgiovilardo/crittomane.git
+# optional, if you use docker and want to cache dep download
 go mod download
 go build -ldflags="-s -w" -trimpath -o ./cm main.go
 chmod 0755 cm
